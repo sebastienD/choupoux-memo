@@ -1,34 +1,21 @@
-<div layout="vertical" layout-fill>
+<div layout="vertical" layout-fill class="buttondemoBasicUsage">
 
   <header ng-include="'components/navbar/navbar.html'"></header>
 
   <md-content>
     <section class="jumbotron">
-      <h1>'Allo, 'Allo!</h1>
-      <p class="lead">
-        <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-        Always a pleasure scaffolding your apps.
+      <p class="lead" style="display:inline-block; position:relative;">
+        <img src="assets/images/choupoux.jpg" alt="choupoux">
+        <md-button class="md-raised" style="position:absolute;left: 421px;top: 210px;" ng-disabled="true" aria-label="Comment">
+          Jouer
+        </md-button>
       </p>
-      <p><a class="btn" ng-href="#">Splendid!</a></p>
     </section>
-
-    <div class="techs" layout-align="center">
-      <md-card ng-repeat="awesomeThing in awesomeThings | orderBy:'rank'">
-        <div class="thumbnail">
-          <img class="pull-right" ng-src="assets/images/{{awesomeThing.logo}}" alt="{{awesomeThing.title}}">
-          <div class="caption">
-            <h3>{{awesomeThing.title}}</h3>
-            <p>{{awesomeThing.description}}</p>
-            <p><a ng-href="{{awesomeThing.url}}">{{awesomeThing.url}}</a></p>
-          </div>
-        </div>
-      </md-card>
-    </div>
   </md-content>
 
   <footer>
     <md-toolbar layout="row" layout-align="center center">
-      <p>With ♥ from <a href="https://twitter.com/Swiip">@Swiip</a></p>
+      <p>With ♥</p>
     </md-toolbar>
   </footer>
 

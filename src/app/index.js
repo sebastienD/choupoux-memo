@@ -7,6 +7,11 @@ angular.module('choupouxMemo', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('board', {
+        url: '/board',
+        templateUrl: 'app/board/board.html',
+        controller: 'BoardCtrl'
       });
 
     $urlRouterProvider.otherwise('/');

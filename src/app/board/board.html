@@ -1,1 +1,16 @@
-<img ng-src="assets/images/card/face/chat.jpg">
+
+<div layout="row" layout-wrap>
+  <section flex="75">
+
+    <div layout="row" layout-wrap>
+      <!-- 6 colonnes, 5 lignes -->
+      <div flex="15" data-ng-repeat="name in cardsPictureNameAnimal">
+        <img ng-src="assets/images/card/face/{{name}}" width="150px" height="140px">
+      </div>
+    </div>
+
+  </section>
+  <section flex="25">
+
+  </section>
+</div>

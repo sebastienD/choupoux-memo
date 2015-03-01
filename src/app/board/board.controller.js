@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('choupouxMemo')
-  .controller('BoardCtrl', function ($scope) {
+  .controller('BoardCtrl', function ($scope, $timeout) {
 
       var cardsPictureNameAnimal = [
         'chat.jpg',
@@ -35,6 +35,7 @@ angular.module('choupouxMemo')
     function initCards(cardsPicture, nbColonne) {
       $scope.cardsPictureName = splitCardsPictureTabTab(cardsPicture, nbColonne);
       $scope.activated = [];
+      $scope.countCh = [];
       cardsPicture.forEach(function(element) {
         $scope.activated[element] = false;
       });
@@ -61,6 +62,33 @@ angular.module('choupouxMemo')
 
     function makeFlip(key) {
       $scope.activated[key] = ! $scope.activated[key];
+      addChoice(key);
+    }
+
+    function addChoice(key) {
+      $scope.countCh.push(key);
+      if ($scope.countCh.length >= 2) {
+
+        var allSame = true;
+        var first = $scope.countCh[0];
+        $scope.countCh.forEach(function(element) {
+            if (first != element) {
+              allSame = false;
+            }
+        });
+
+        if (!allSame) {
+          $timeout(function() {
+            $scope.countCh.forEach(function(key) {
+              $scope.activated[key] = ! $scope.activated[key];
+            });
+            $scope.countCh = [];
+          }, 1000);
+        } else {
+          $scope.countCh = [];
+        }
+
+      }
     }
 
   });

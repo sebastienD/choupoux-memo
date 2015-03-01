@@ -2,10 +2,15 @@
 <div layout="row" layout-wrap>
   <section flex="75">
 
-    <div layout="row" layout-wrap>
-      <!-- 6 colonnes, 5 lignes -->
-      <div flex="15" data-ng-repeat="name in cardsPictureNameAnimal">
-        <img ng-src="assets/images/card/face/{{name}}" width="150px" height="140px">
+    <!-- 6 colonnes, 5 lignes -->
+    <div layout="row" layout-wrap data-ng-repeat="nameTab in cardsPictureName">
+      <div flex="15" data-ng-repeat="name in nameTab">
+
+        <div class="flip"  ng-class="{active: activated[name]}"  ng-click="makeFlip(name)">
+              <img class="front" ng-src="assets/images/card/dos/dos.png" >
+              <img class="back" ng-src="assets/images/card/face/{{name}}" >
+        </div>
+
       </div>
     </div>
 

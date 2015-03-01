@@ -55,3 +55,37 @@ section.jumbotron {
 // injector
 // endinjector
 
+.flip {
+  width: 150px;
+  height: 140px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: 1s transform;
+}
+
+.flip img {
+  width: 100%;
+  height: 100%;
+}
+
+.flip .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  transform: rotateY(.5turn) translateZ(1px);
+  transition: 1s .5s opacity;
+}
+
+.flip.active {
+  transform: rotateY(.5turn);
+}
+
+.flip:after {
+  content: " ";
+  display: block;
+  height: 8vw;
+  width: 100%;
+  transform: rotateX(90deg);
+  background-image: radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+}

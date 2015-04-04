@@ -1,6 +1,9 @@
 {
   "name": "choupouxMemo",
   "version": "0.0.0",
+  "repository": {
+    "url": "https://github.com/sebastienD/choupoux-memo.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "gulp": "~3.8.10",

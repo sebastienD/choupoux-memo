@@ -28,67 +28,67 @@ angular.module('choupouxMemo')
         'lait.png'
     ];
 
-    initCards(cardsPictureNameAnimal, 6);
+    initCards(cardsPictureNameAnimal);
 
     $scope.makeFlip = makeFlip;
 
-    function initCards(cardsPicture, nbColonne) {
-      $scope.cardsPictureName = splitCardsPictureTabTab(cardsPicture, nbColonne);
-      $scope.activated = [];
-      $scope.countCh = [];
-      cardsPicture.forEach(function(element) {
-        $scope.activated[element] = false;
+    function initCards(cardsPictureName) {
+      var cards = [];
+      $scope.chosenCards = [];
+      cardsPictureName.forEach(function(name) {
+        cards.push({name: name, activated: false});
+        cards.push({name: name, activated: false});
       });
 
+      cards = scrumbleCards(cards);
+      $scope.cards = scrumbleCards(cards);
     }
 
-    function splitCardsPictureTabTab(cardsPicture, nbColonne) {
-      var tabFinal = [];
-      var row = [];
-      cardsPicture.forEach(function(element, index) {
-        if (row.length > 0 && index % nbColonne == 0) {
-            tabFinal.push(row);
-            row = [];
-        }
-        row.push(element);
-      });
+    function scrumbleCards(cards) {
+      var scrumbledCards = [];
 
-      if (row.length < nbColonne) {
-        tabFinal.push(row);
+      while (cards.length > 0) {
+        var numberCards = cards.length;
+        var index = Math.floor(Math.random() * (numberCards - 1));
+        var card = cards.splice(index, 1);
+        scrumbledCards.push(card[0]);
       }
 
-      return tabFinal;
+      return scrumbledCards;
     }
 
-    function makeFlip(key) {
-      $scope.activated[key] = ! $scope.activated[key];
-      addChoice(key);
+    function makeFlip(card) {
+      if (card.activated) {
+        return;
+      }
+      card.activated = true;
+      makeActionOnActivate(card);
     }
 
-    function addChoice(key) {
-      $scope.countCh.push(key);
-      if ($scope.countCh.length >= 2) {
+    function makeActionOnActivate(card) {
+      $scope.chosenCards.push(card);
+      if ($scope.chosenCards.length >= 2) {
 
-        var allSame = true;
-        var first = $scope.countCh[0];
-        $scope.countCh.forEach(function(element) {
-            if (first != element) {
-              allSame = false;
-            }
-        });
+        var chosenCardsAreSame = $scope.chosenCards.every(hasSameNameThatFirstChosenCard);
 
-        if (!allSame) {
-          $timeout(function() {
-            $scope.countCh.forEach(function(key) {
-              $scope.activated[key] = ! $scope.activated[key];
-            });
-            $scope.countCh = [];
-          }, 1000);
+        if (chosenCardsAreSame) {
+          $scope.chosenCards = [];
+
         } else {
-          $scope.countCh = [];
+          $timeout(function() {
+            while($scope.chosenCards.length > 0) {
+              $scope.chosenCards.pop().activated = false;
+            }
+          }, 1000);
+
         }
 
       }
+    }
+
+    function hasSameNameThatFirstChosenCard(element) {
+      var firstCard = $scope.chosenCards[0];
+      return element.name === firstCard.name;
     }
 
   });

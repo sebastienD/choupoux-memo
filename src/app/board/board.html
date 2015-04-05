@@ -2,18 +2,19 @@
 <div layout="row" layout-wrap>
   <section flex="75">
 
-    <!-- 6 colonnes, 5 lignes -->
-    <div layout="row" layout-wrap data-ng-repeat="nameTab in cardsPictureName">
-      <div flex="15" data-ng-repeat="name in nameTab">
+<md-grid-list
+  md-cols-sm="3" md-cols-md="5" md-cols-gt-md="6"
+   md-row-height="1:1"
+  md-gutter="8px" >
 
-        <div class="flip"  ng-class="{active: activated[name]}"  ng-click="makeFlip(name)">
-              <img class="front" ng-src="assets/images/card/dos/dos.png" >
-              <img class="back" ng-src="assets/images/card/face/{{name}}" >
-        </div>
-
-      </div>
+  <md-grid-tile data-ng-repeat="card in cards">
+    <div class="flip"  ng-class="{active: card.activated}" ng-click="makeFlip(card)">
+      <img class="front" ng-src="assets/images/card/dos/dos.png" >
+      <img class="back" ng-src="assets/images/card/face/{{card.name}}" >
     </div>
+  </md-grid-tile>
 
+</md-grid-list>
   </section>
   <section flex="25">
 

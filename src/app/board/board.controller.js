@@ -3,34 +3,25 @@
 angular.module('choupouxMemo')
   .controller('BoardCtrl', function ($scope, $timeout) {
 
-      var cardsPictureNameAnimal = [
-        'chat.jpg',
-        'cheval.jpg',
-        'chien.jpg',
-        'cochon.jpg',
-        'kangourou.jpg',
-        'lapin.jpg',
-        'lion.jpg',
-        'mouton.jpg',
-        'ours.jpg',
-        'panda.jpg',
-        'pingoo.jpg',
-        'souris.jpg',
-        'vache.jpg',
-        'zebre.jpg'
-      ];
+    var partie;
 
-    var cardsPictureNameMadeHome = [
-        'balle_tennis.png',
-        'batte.png',
-        'cochon.png',
-        'triangles.png',
-        'lait.png'
-    ];
-
-    initCards(cardsPictureNameAnimal);
+    initGame();
+    initCards(stackCards.animal);
 
     $scope.makeFlip = makeFlip;
+
+    function initGame() {
+      var player1 = new player('sebastien', '');
+      var player2 = new player('antoine', '');
+      var params = new settings();
+      params.players.push(player1);
+      params.players.push(player2);
+
+      partie = new game(params);
+      $scope.currentPlayer = partie.players[0];
+      $scope.currentPlayer.index = 0;
+      $scope.partie = partie;
+    }
 
     function initCards(cardsPictureName) {
       var cards = [];
@@ -72,9 +63,25 @@ angular.module('choupouxMemo')
         var chosenCardsAreSame = $scope.chosenCards.every(hasSameNameThatFirstChosenCard);
 
         if (chosenCardsAreSame) {
+          // coup gagne
+          partie.addRound($scope.currentPlayer);
           $scope.chosenCards = [];
 
         } else {
+          // coup perdu
+          partie.addRound();
+
+          // c'est au joueur suivant de jouer
+          // rewrite with modulo
+          var indexOfCurrentPlayer = $scope.currentPlayer.index;
+          if (indexOfCurrentPlayer == (partie.players.length - 1)) {
+            $scope.currentPlayer = partie.players[0];
+            $scope.currentPlayer.index = 0;
+          } else {
+            $scope.currentPlayer = partie.players[indexOfCurrentPlayer + 1];
+            $scope.currentPlayer.index = indexOfCurrentPlayer + 1;
+          }
+
           $timeout(function() {
             while($scope.chosenCards.length > 0) {
               $scope.chosenCards.pop().activated = false;

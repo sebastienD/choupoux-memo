@@ -5,9 +5,9 @@
 <md-grid-list
   md-cols-sm="3" md-cols-md="5" md-cols-gt-md="6"
    md-row-height="1:1"
-  md-gutter="8px" >
+  md-gutter="8px" class="board" >
 
-  <md-grid-tile data-ng-repeat="card in cards">
+  <md-grid-tile data-ng-repeat="card in cards" class="card">
     <div class="flip"  ng-class="{active: card.activated}" ng-click="makeFlip(card)">
       <img class="front" ng-src="assets/images/card/dos/dos.png" >
       <img class="back" ng-src="assets/images/card/face/{{card.name}}" >
@@ -17,6 +17,10 @@
 </md-grid-list>
   </section>
   <section flex="25">
+         joueur en train de jouer : {{currentPlayer.identity.name}}
 
+          <ul>
+            <li data-ng-repeat="player in partie.players">name: {{player.identity.name}}, paire trouvée: {{player.numberOfRoundFound}}</li>
+          </ul>
   </section>
 </div>

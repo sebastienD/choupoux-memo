@@ -16,7 +16,6 @@ describe('controllers', function(){
       $scope: scope
     });
 
-    expect(angular.isArray(scope.awesomeThings)).toBeTruthy();
-    expect(scope.awesomeThings.length == 1).toBeTruthy();
+    expect(angular.isUndefined(scope.awesomeThings)).toBeTruthy();
   }));
 });

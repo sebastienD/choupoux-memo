@@ -28,53 +28,65 @@ var stackCards = (function() {
   }
 })();
 
-var player = (function() {
-
-  return {
-    'numberOfGameWin': 0,
-    'numberOfGameLoose': 0,
-    'avatar': ''
-  };
-
-})();
+var player = function(name, avatar) {
 
 
-var settings = (function() {
+    return {
+      'numberOfGameWin': 0,
+      'numberOfGameLoose': 0,
+      'name': name,
+      'avatar': avatar
+    };
+};
+
+
+var settings = function() {
+
+  var players = [];
+
+  function playersSize() {
+    return players.length;
+  }
 
   return {
     "numberOfSameCard": 2,
-    "stackCards": [],
-    "players": []
+    "stackCards": stackCards.animal,
+    "players": players,
+    "numberOfPlayers": playersSize
   };
-})();
+};
 
-var game = (function () {
+var game = function (settings) {
 
-  this.settings = settings;
-  this.players = initPlayers();
+  var settings = settings;
+  var players = initPlayers();
+  var numberOfRounds = 0;
 
   function initPlayers() {
     var playersTab = [];
     settings.players.forEach(function(player) {
-      playersTab.push({'player':player, 'numberOfRoundFound':0});
+      playersTab.push({'identity':player, 'numberOfRoundFound':0});
     });
     return playersTab;
   }
 
-  function addRoundFound(player) {
-    this.players.filter(function(playerElement) {return playerElement == player})
-      .forEach(function(playerElement) { playerElement.numberOfRoundFound ++;});
-  }
-
-  function numberOfRoundFound(player) {
-    return this.players.filter(function(playerElement) {return playerElement == player})[0].numberOfRoundFound;
+  function addRound(player) {
+    numberOfRounds++;
+    if (angular.isDefined(player)) {
+      this.players.filter(function (playerElement) {
+          return playerElement == player
+        }
+      ).forEach(function (playerElement) {
+          playerElement.numberOfRoundFound++;
+        }
+      );
+    }
   }
 
   return {
-    'players': {},
-    'settings': {},
-    'numberOfRoundFound': numberOfRoundFound,
-    'addRoundFound': addRoundFound
+    'players': players,
+    'numberOfRoundPlayed': numberOfRounds,
+    'addRound': addRound
   };
 
-})(settings);
+};
